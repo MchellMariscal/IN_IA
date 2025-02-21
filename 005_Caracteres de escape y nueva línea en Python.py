@@ -1,0 +1,5 @@
+print("Entre caníbales\nEl dolor\nEs veneno, nena\nY no lo sentirás\nHasta el fin\nMientras te muevas lento")
+print()
+print("Y jadees el nombre\nQue mata")
+print()
+print("Entre Canibales-Soda Stereo")
