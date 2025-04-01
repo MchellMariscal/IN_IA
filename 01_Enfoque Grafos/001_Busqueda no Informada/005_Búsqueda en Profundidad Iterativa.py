@@ -62,7 +62,6 @@ grafo = {
     'F': ['C'],
     'G': ['E']
 }
-
 # Prueba de la Búsqueda Bidireccional
 resultado = busqueda_bidireccional(grafo, 'A', 'G')
 print(f'Ruta encontrada: {resultado}')
