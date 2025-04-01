@@ -1,29 +1,56 @@
-def busqueda_profundidad_limitada(grafo, nodo_inicial, objetivo, profundidad_maxima):
-    # Caso base: si el nodo inicial es el objetivo
-    if nodo_inicial == objetivo:
-        return [nodo_inicial]
-    
-    # Si hemos alcanzado la profundidad máxima, no buscamos más
-    if profundidad_maxima == 0:
-        return None
-    
-    # Si no hemos alcanzado el objetivo, seguimos buscando en los vecinos
-    for vecino in grafo.get(nodo_inicial, []):
-        resultado = busqueda_profundidad_limitada(grafo, vecino, objetivo, profundidad_maxima - 1)
-        if resultado:
-            return [nodo_inicial] + resultado
-    
-    # Si no encontramos el objetivo, devolvemos None
+from collections import deque
+
+def verificar_cruce(camino_inicial, camino_objetivo):
+    # Revisa si hay algún nodo común en los caminos
+    for nodo in camino_inicial:
+        if nodo in camino_objetivo:
+            return nodo
     return None
 
-def busqueda_profundidad_iterativa(grafo, nodo_inicial, objetivo):
-    profundidad = 0
-    while True:
-        # Llamamos a la Búsqueda en Profundidad Limitada con la profundidad actual
-        resultado = busqueda_profundidad_limitada(grafo, nodo_inicial, objetivo, profundidad)
-        if resultado:
-            return resultado
-        profundidad += 1  # Aumentamos la profundidad en cada iteración
+def reconstruir_camino(camino, nodo_comun):
+    # Reconstruye el camino desde el nodo hasta el nodo común
+    camino_reconstruido = []
+    nodo = nodo_comun
+    while nodo is not None:
+        camino_reconstruido.append(nodo)
+        nodo = camino[nodo]
+    return camino_reconstruido[::-1]  # Invertimos el camino
+
+def busqueda_bidireccional(grafo, nodo_inicial, nodo_objetivo):
+    if nodo_inicial == nodo_objetivo:
+        return [nodo_inicial]
+    
+    # Inicializamos las fronteras de las dos búsquedas
+    frontera_inicial = deque([nodo_inicial])
+    frontera_objetivo = deque([nodo_objetivo])
+    
+    # Inicializamos los caminos desde el nodo inicial y objetivo
+    camino_inicial = {nodo_inicial: None}
+    camino_objetivo = {nodo_objetivo: None}
+    
+    while frontera_inicial and frontera_objetivo:
+        # Expande un nodo de la frontera inicial
+        nodo_actual_inicial = frontera_inicial.popleft()
+        for vecino in grafo.get(nodo_actual_inicial, []):
+            if vecino not in camino_inicial:
+                camino_inicial[vecino] = nodo_actual_inicial
+                frontera_inicial.append(vecino)
+
+        # Expande un nodo de la frontera objetivo
+        nodo_actual_objetivo = frontera_objetivo.popleft()
+        for vecino in grafo.get(nodo_actual_objetivo, []):
+            if vecino not in camino_objetivo:
+                camino_objetivo[vecino] = nodo_actual_objetivo
+                frontera_objetivo.append(vecino)
+
+        # Verifica si las fronteras se cruzan
+        nodo_comun = verificar_cruce(camino_inicial, camino_objetivo)
+        if nodo_comun:
+            # Si se cruzan, reconstruye el camino
+            camino = reconstruir_camino(camino_inicial, nodo_comun) + reconstruir_camino(camino_objetivo, nodo_comun)[1:]
+            return camino
+
+    return None  # Si no se encuentra el camino
 
 # Grafo de ejemplo
 grafo = {
@@ -36,6 +63,6 @@ grafo = {
     'G': ['E']
 }
 
-# Prueba de la Búsqueda en Profundidad Iterativa
-resultado = busqueda_profundidad_iterativa(grafo, 'A', 'G')
+# Prueba de la Búsqueda Bidireccional
+resultado = busqueda_bidireccional(grafo, 'A', 'G')
 print(f'Ruta encontrada: {resultado}')
