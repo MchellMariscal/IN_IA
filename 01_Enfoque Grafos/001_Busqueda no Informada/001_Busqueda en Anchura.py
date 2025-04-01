@@ -1,5 +1,4 @@
 # Búsqueda en Anchura (BFS)
-# Implementación en Python
 
 from collections import deque
 
