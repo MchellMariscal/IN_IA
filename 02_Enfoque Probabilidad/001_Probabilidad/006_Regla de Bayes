@@ -1,0 +1,11 @@
+# Datos del problema
+P_enfermo = 0.01
+P_sano = 1 - P_enfermo
+P_positivo_dado_enfermo = 0.9
+P_positivo_dado_sano = 0.05
+
+# Regla de Bayes
+P_positivo = (P_positivo_dado_enfermo * P_enfermo) + (P_positivo_dado_sano * P_sano)
+P_enfermo_dado_positivo = (P_positivo_dado_enfermo * P_enfermo) / P_positivo
+
+print(f"Probabilidad de estar enfermo dado positivo: {P_enfermo_dado_positivo:.4f}")
