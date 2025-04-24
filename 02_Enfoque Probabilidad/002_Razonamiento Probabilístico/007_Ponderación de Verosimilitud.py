@@ -1,39 +1,44 @@
 import random
 
-# Definimos la red bayesiana
-P_R = {
-    True: 0.2,
-    False: 0.8
-}
+def sample_cloudy():
+    return random.random() < 0.5
 
-P_S_given_R = {
-    True: {True: 0.9, False: 0.1},
-    False: {True: 0.2, False: 0.8}
-}
+def sample_sprinkler(cloudy):
+    if cloudy:
+        return random.random() < 0.1
+    else:
+        return random.random() < 0.5
 
-# La variable observada es S = True
+def wetgrass_prob(sprinkler):
+    return 0.9 if sprinkler else 0.2
 
-# Función de muestreo con ponderación por verosimilitud
-def ponderacion_verosimilitud(n):
-    pesos = []
-    muestras_r = []
+def likelihood_weighting(n_samples=10000, evidence={'WetGrass': True}):
+    weighted_samples = []
 
-    for _ in range(n):
-        r = random.choices([True, False], weights=[P_R[True], P_R[False]])[0]
+    for _ in range(n_samples):
+        sample = {}
+        weight = 1.0
 
-        # Asumimos evidencia S=True y ponderamos con su verosimilitud P(S=True | R)
-        peso = P_S_given_R[r][True]
+        # 1. Sample Cloudy
+        cloudy = sample_cloudy()
+        sample['Cloudy'] = cloudy
 
-        muestras_r.append(r)
-        pesos.append(weso)
+        # 2. Sample Sprinkler given Cloudy
+        sprinkler = sample_sprinkler(cloudy)
+        sample['Sprinkler'] = sprinkler
 
-    total_peso = sum(pesos)
-    if total_peso == 0:
-        return 0
-    
-    prob_r_true = sum(w for r, w in zip(muestras_r, pesos) if r) / total_peso
-    return prob_r_true
+        # 3. Don't sample WetGrass, just weight it
+        wet_prob = wetgrass_prob(sprinkler)
+        weight *= wet_prob if evidence['WetGrass'] else (1 - wet_prob)
 
-# Ejecutamos la estimación
-probabilidad_estimacion = ponderacion_verosimilitud(1000)
-print(f"P(R=True | S=True) usando ponderación de verosimilitud: {probabilidad_estimacion:.3f}")
+        weighted_samples.append((sample, weight))
+
+    # 4. Estimate P(Cloudy=True | WetGrass=True)
+    cloudy_true = sum(weight for (s, weight) in weighted_samples if s['Cloudy'])
+    total_weight = sum(weight for (_, weight) in weighted_samples)
+
+    return cloudy_true / total_weight
+
+# Ejecutar
+resultado = likelihood_weighting()
+print(f"P(Cloudy=True | WetGrass=True) ≈ {resultado:.4f}")
