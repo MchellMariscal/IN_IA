@@ -1,5 +1,5 @@
 # Inferencia por Enumeración en una Red Bayesiana simple
-# NOTA: Esta práctica está comentada paso a paso
+
 
 # Definimos las probabilidades de la red bayesiana manualmente
 # Suponemos una red muy simple: P(R) y P(S | R)

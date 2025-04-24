@@ -1,4 +1,3 @@
-# Ejemplo práctico: Manto de Markov en una red bayesiana (sin librerías externas)
 
 # Grafo representado como diccionario de adyacencia dirigido
 # Las claves son nodos y los valores son listas de nodos hijos (a los que apunta)
