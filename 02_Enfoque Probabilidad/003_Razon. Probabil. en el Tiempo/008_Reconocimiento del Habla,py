@@ -1,0 +1,19 @@
+# Supongamos dos palabras: "hola" y "ola"
+palabras = ["hola", "ola"]
+modelos = {
+    "hola": ["h", "o", "l", "a"],
+    "ola": ["o", "l", "a"]
+}
+
+def reconocer_habla(sonidos):
+    mejores = []
+    for palabra, modelo in modelos.items():
+        score = sum(1 for s, m in zip(sonidos, modelo) if s == m)
+        mejores.append((score, palabra))
+    mejores.sort(reverse=True)
+    return mejores[0][1]
+
+# Ejemplo
+entrada_usuario = ["o", "l", "a"]
+resultado = reconocer_habla(entrada_usuario)
+print("Palabra reconocida:", resultado)
