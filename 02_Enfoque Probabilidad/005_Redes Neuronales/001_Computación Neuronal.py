@@ -10,7 +10,6 @@ def neuron_output(inputs, weights, bias):
 def activation_function(x):
     """Función de activación escalón"""
     return 1 if x >= 0 else 0
-
 # Definimos entradas, pesos y sesgo
 inputs = np.array([1, 0])      # Entradas de la neurona
 weights = np.array([0.6, -0.4]) # Pesos sinápticos
