@@ -30,7 +30,7 @@ def algoritmo_genetico(tamaño_poblacion, generaciones):
 
     for _ in range(generaciones):
         nueva_poblacion = []
-        
+
         for _ in range(tamaño_poblacion // 2):  # Se generan parejas
             padre1, padre2 = seleccion(poblacion)
             hijo = cruce(padre1, padre2)
@@ -45,3 +45,5 @@ def algoritmo_genetico(tamaño_poblacion, generaciones):
 # Ejecutar el Algoritmo Genético
 mejor_solucion = algoritmo_genetico(tamaño_poblacion=10, generaciones=20)
 print(f'Mejor solución encontrada: {mejor_solucion}, con fitness: {fitness(mejor_solucion)}')
+
+# Ejemplo de aplicación real: En la optimización de diseños de ingeniería, los algoritmos genéticos pueden ser utilizados para encontrar la configuración de diseño que maximiza el rendimiento y minimiza los costos de producción.

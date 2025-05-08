@@ -19,10 +19,10 @@ def busqueda_online(laberinto, inicio, objetivo):
 
     while estado_actual != objetivo:
         visitados.add(estado_actual)
-        
+
         # Obtenemos vecinos no visitados
         vecinos = [n for n in laberinto.get(estado_actual, []) if n not in visitados]
-        
+
         if vecinos:
             estado_actual = random.choice(vecinos)  # Elegimos un vecino aleatorio
         else:
@@ -31,7 +31,7 @@ def busqueda_online(laberinto, inicio, objetivo):
                 estado_actual = camino[-1]
             else:
                 return None  # No hay solución
-        
+
         camino.append(estado_actual)
 
     return camino
@@ -39,3 +39,5 @@ def busqueda_online(laberinto, inicio, objetivo):
 # Ejecutamos la búsqueda online desde 'A' hasta 'G'
 resultado = busqueda_online(laberinto, 'A', 'G')
 print(f'Ruta encontrada con Búsqueda Online: {resultado}')
+
+# Ejemplo de aplicación real: En la exploración de entornos desconocidos por robots, la búsqueda online puede ser utilizada para encontrar rutas seguras y eficientes, adaptándose a cambios en el entorno en tiempo real.

@@ -1,25 +1,10 @@
 def depth_first_search(graph, start, visited=None):
     if visited is None:
-        visited = set()
+        visited = set()  # Inicializamos conjunto de visitados
     
-    visited.add(start)
-    print(start, end=' ')
+    visited.add(start)  # Visitamos el nodo actual
+    print(start, end=' ')  # Mostramos el nodo
     
-    for neighbor in graph.get(start, []):
+    for neighbor in graph.get(start, []):  # Recorremos sus vecinos
         if neighbor not in visited:
-            depth_first_search(graph, neighbor, visited)
-
-# Ejemplo de uso
-graph = {
-    'A': ['B', 'C'],
-    'B': ['A', 'D', 'E'],
-    'C': ['A', 'F', 'G'],
-    'D': ['B'],
-    'E': ['B', 'H'],
-    'F': ['C'],
-    'G': ['C'],
-    'H': ['E']
-}
-
-start = 'A'
-depth_first_search(graph, start)
+            depth_first_search(graph, neighbor, visited)  # Llamada recursiva

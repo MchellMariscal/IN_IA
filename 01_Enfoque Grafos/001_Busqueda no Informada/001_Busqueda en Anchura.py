@@ -1,33 +1,19 @@
-# Búsqueda en Anchura (BFS)
-
-from collections import deque
+from collections import deque  # Importamos deque para usarlo como cola eficiente
 
 def bfs(graph, start):
-    visited = set()  # Conjunto para nodos visitados
-    queue = deque([start])  # Cola para la exploración
-    resultado = []  # Lista para almacenar el recorrido
+    visited = set()  # Conjunto para registrar los nodos que ya hemos visitado
+    queue = deque([start])  # Inicializamos la cola con el nodo de inicio
+    resultado = []  # Lista para guardar el orden de los nodos visitados
 
+    # Mientras haya nodos por explorar
     while queue:
-        node = queue.popleft()
-        if node not in visited:
-            visited.add(node)
-            resultado.append(node)
-            queue.extend(graph[node])  # Agregar nodos adyacentes a la cola
+        node = queue.popleft()  # Sacamos el nodo que está al frente de la cola (FIFO)
+        
+        if node not in visited:  # Si no lo hemos visitado aún
+            visited.add(node)  # Lo marcamos como visitado
+            resultado.append(node)  # Lo agregamos al resultado (orden de visita)
+            
+            # Agregamos sus vecinos a la cola para ser visitados más adelante
+            queue.extend(graph[node])
     
-    return resultado
-
-# Ejemplo de uso
-graph = {
-    'A': ['B', 'C'],
-    'B': ['A', 'D', 'E'],
-    'C': ['A', 'F', 'G'],
-    'D': ['B'],
-    'E': ['B', 'H'],
-    'F': ['C'],
-    'G': ['C'],
-    'H': ['E']
-}
-
-inicio = 'A'
-recorrido = bfs(graph, inicio)
-print("Recorrido BFS desde", inicio, ":", recorrido)
+    return resultado  # Retornamos la lista con el recorrido BFS

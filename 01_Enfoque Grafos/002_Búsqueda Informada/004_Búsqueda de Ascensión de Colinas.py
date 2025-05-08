@@ -25,26 +25,28 @@ heuristica = {
 def hill_climbing(grafo, nodo_inicial):
     nodo_actual = nodo_inicial
     camino = [nodo_actual]
-    
+
     while True:
         vecinos = grafo.get(nodo_actual, {})
-        
+
         # Elegimos el vecino con la mejor heurística
         mejor_vecino = None
         mejor_valor = heuristica[nodo_actual]
-        
+
         for vecino in vecinos:
             if heuristica[vecino] > mejor_valor:
                 mejor_vecino = vecino
                 mejor_valor = heuristica[vecino]
-        
+
         # Si no hay mejor vecino, terminamos
         if mejor_vecino is None:
             return camino
-        
+
         nodo_actual = mejor_vecino
         camino.append(nodo_actual)
 
 # Prueba con el nodo inicial 'A'
 resultado = hill_climbing(grafo, 'A')
 print(f'Camino encontrado con Ascensión de Colinas: {resultado}')
+
+# Ejemplo de aplicación real: En la optimización de redes de telecomunicaciones, la búsqueda de ascensión de colinas puede ser utilizada para encontrar la configuración de red que maximiza el rendimiento y minimiza la latencia.

@@ -30,4 +30,8 @@ heuristicas = {
 def heuristica(nodo):
     return heuristicas.get(nodo, float('inf'))
 
-# Función de costo de arista (si no se define,
+# Función de costo de arista (si no se define, se asume infinito)
+def costo_de(nodo1, nodo2):
+    return grafo.get(nodo1, {}).get(nodo2, float('inf'))
+
+# Ejemplo de aplicación real: En un sistema de navegación GPS, las heurísticas pueden ser usadas para estimar la distancia más corta entre dos puntos en un mapa, ayudando a guiar al usuario por la ruta más eficiente.

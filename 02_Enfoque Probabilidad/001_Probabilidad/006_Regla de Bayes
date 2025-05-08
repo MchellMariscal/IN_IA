@@ -1,11 +1,13 @@
 # Datos del problema
-P_enfermo = 0.01
-P_sano = 1 - P_enfermo
-P_positivo_dado_enfermo = 0.9
-P_positivo_dado_sano = 0.05
+P_enfermo = 0.01  # Probabilidad a priori de estar enfermo
+P_sano = 1 - P_enfermo  # Probabilidad a priori de estar sano
+P_positivo_dado_enfermo = 0.9  # Probabilidad de un test positivo dado que está enfermo
+P_positivo_dado_sano = 0.05  # Probabilidad de un test positivo dado que está sano
 
-# Regla de Bayes
-P_positivo = (P_positivo_dado_enfermo * P_enfermo) + (P_positivo_dado_sano * P_sano)
-P_enfermo_dado_positivo = (P_positivo_dado_enfermo * P_enfermo) / P_positivo
+# Aplicamos la regla de Bayes para calcular la probabilidad de estar enfermo dado un test positivo
+P_positivo = (P_positivo_dado_enfermo * P_enfermo) + (P_positivo_dado_sano * P_sano)  # Probabilidad total de un test positivo
+P_enfermo_dado_positivo = (P_positivo_dado_enfermo * P_enfermo) / P_positivo  # Probabilidad de estar enfermo dado un test positivo
 
-print(f"Probabilidad de estar enfermo dado positivo: {P_enfermo_dado_positivo:.4f}")
+print(f"Probabilidad de estar enfermo dado positivo: {P_enfermo_dado_positivo:.4f}")  # Imprimimos el resultado
+
+# Ejemplo de aplicación real: En el diagnóstico médico, la regla de Bayes puede ser utilizada para actualizar la probabilidad de una enfermedad después de obtener resultados de pruebas diagnósticas, mejorando la precisión del diagnóstico.

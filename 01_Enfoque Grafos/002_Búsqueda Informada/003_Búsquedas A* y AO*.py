@@ -32,14 +32,14 @@ def costo_de(nodo1, nodo2):
 def a_star(grafo, nodo_inicial, nodo_objetivo, heuristica):
     abrir_lista = []
     heapq.heappush(abrir_lista, (heuristica(nodo_inicial), nodo_inicial))
-    
+
     g = {nodo_inicial: 0}
     f = {nodo_inicial: heuristica(nodo_inicial)}
     came_from = {}
-    
+
     while abrir_lista:
         _, nodo_actual = heapq.heappop(abrir_lista)
-        
+
         if nodo_actual == nodo_objetivo:
             # Reconstruir el camino
             camino = []
@@ -48,7 +48,7 @@ def a_star(grafo, nodo_inicial, nodo_objetivo, heuristica):
                 nodo_actual = came_from[nodo_actual]
             camino.append(nodo_inicial)
             return camino[::-1]
-        
+
         for vecino, costo in grafo.get(nodo_actual, {}).items():
             tentative_g = g[nodo_actual] + costo
             if vecino not in g or tentative_g < g[vecino]:
@@ -56,9 +56,11 @@ def a_star(grafo, nodo_inicial, nodo_objetivo, heuristica):
                 g[vecino] = tentative_g
                 f[vecino] = tentative_g + heuristica(vecino)
                 heapq.heappush(abrir_lista, (f[vecino], vecino))
-    
+
     return None  # Si no se encuentra el objetivo
 
 # Ejecutar A* desde 'A' hasta 'G'
 camino = a_star(grafo, 'A', 'G', heuristica)
 print(f'Camino encontrado con A*: {camino}')
+
+# Ejemplo de aplicación real: En la robótica, el algoritmo A* es utilizado para la navegación autónoma de robots en entornos desconocidos, permitiéndoles encontrar el camino más eficiente hacia un objetivo.
